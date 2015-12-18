@@ -1,0 +1,8 @@
+{% extends 'layout2.twig' %}
+
+{% block content %}
+    <h2> {{ datas.title }} </h2>
+    <p> {{ datas.content|raw }} </p>
+    <p><strong> {{ datas.author }} </strong></p>
+    <p>Cet article est publié avec un autre template (news2.twig) :-o</p>
+{% endblock %}

@@ -63,7 +63,7 @@ class YamlFileManager {
 	public function parse($filename) {
 		foreach($this->files as $file) {
 			if($file['name'] == $filename) {
-				$doc = Parser::parse(file_get_contents($file['path']))->setConfig('url', Router::getUrl($this->entity).'/'.$file['name']);
+				$doc = Parser::parse(file_get_contents($file['path']))->setConfig('url', ConfigManager::getUrl($this->entity).'/'.$file['name']);
 				if($file['parser']) {
 					$html = self::parseMarkdown($doc->getContent());
 				} else {

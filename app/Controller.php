@@ -20,11 +20,19 @@ class Controller {
 
 	public function index() {
 		$datas = $this->entityManager->findAll();
-		return $this->app->render("{$this->directory}/index.twig", compact('datas'));
+
+		$template = ConfigManager::getTemplate($this->directory);
+		$templateDirectory = ConfigManager::getTemplateDirectory($this->directory);
+
+		return $this->app->render("{$templateDirectory}/{$template}.twig", compact('datas'));
 	}
 	
 	public function show($name) {
 		$datas = $this->entityManager->find($name);
-		return $this->app->render("{$this->directory}/{$this->directory}.twig", compact('datas'));
+
+		$template = ConfigManager::getTemplate($this->directory, $name);
+		$templateDirectory = ConfigManager::getTemplateDirectory($this->directory, $name);
+
+		return $this->app->render("{$templateDirectory}/{$template}.twig", compact('datas'));
 	}
 }

@@ -13,14 +13,22 @@ $config = [
 $app = new \Slim\Slim($config);
 $view = $app->view();
 
+/** Whoops errors **/
+$app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
+/* -- */
+
 /** Debug Bar **/
 use DebugBar\StandardDebugBar;
 $debugbar = new StandardDebugBar();
 $debugbar->addCollector(new DebugBar\Bridge\SlimCollector($app));
 
+$loader = new Twig_Loader_Filesystem('.');
+$env = new DebugBar\Bridge\Twig\TraceableTwigEnvironment(new Twig_Environment($loader));
+$debugbar->addCollector(new DebugBar\Bridge\Twig\TwigCollector($env));
+
 $debugbarRenderer = $debugbar->getJavascriptRenderer();
 $view->appendData(['debugbarRenderer' => $debugbarRenderer]);
-/** End Debug Bar **/
+/* -- */
 
 $site = App\App::getConfig('site');
 $view->appendData(['site' => $site]);
@@ -44,7 +52,7 @@ $app->get('/', function() use($app) {
 
 
 
-$router = new App\Router();
+$router = new App\ConfigManager();
 
 
 
