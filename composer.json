@@ -7,7 +7,9 @@
         "cebe/markdown": "^1.1",
         "twig/twig": "^1.21",
         "maximebf/debugbar": "^1.11",
-        "zeuxisoo/slim-whoops": "0.3.*"
+        "zeuxisoo/slim-whoops": "0.3.*",
+        "symfony/routing": "^3.0",
+        "symfony/http-foundation": "^3.0",
     },
     "authors": [
         {

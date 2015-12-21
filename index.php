@@ -1,6 +1,5 @@
 <?php
 require 'vendor/autoload.php';
-
 $templatesPath = dirname(__FILE__) . '/templates';
 
 $config = [
@@ -30,9 +29,6 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
 $view->appendData(['debugbarRenderer' => $debugbarRenderer]);
 /* -- */
 
-$site = App\App::getConfig('site');
-$view->appendData(['site' => $site]);
-
 $view->parserOptions['debug'] = true;
 $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
@@ -50,23 +46,22 @@ $app->get('/', function() use($app) {
 	$app->render('index.twig', compact('news'));
 })->name('home');
 
-
+/** Inject variable into twig **/
+$folders = App\App::getFolders();
+$view->appendData(['navigation' => $folders]);
 
 $router = new App\ConfigManager();
-
-
-
-$folders = App\App::getFolders();
-//$test = $router->getUrl('news');
-$view->appendData(['navigation' => $folders]);
 $view->appendData(['router' => $router]);
+/**  ---- **/
 
 
-foreach ($folders as $folder) {
-	$app->get("/{$router->getUrl($folder)}", 'App\Controller:index')->name($folder);
-	$app->get("/{$router->getUrl($folder)}/:article", 'App\Controller:show')->name($folder);
-}
+require "routes.php";
 
-//$app->get('/news/:article', 'App\NewsController:show')->name('news.show');
+/** Inject variable into twig **/
+$site = App\App::getConfig('site');
+$view->appendData(['site' => $site]);
+/**  ---- **/
+
+//$app->get('/emix/:article', 'App\AppController:test')->name('news.show');
 
 $app->run();

@@ -1,1 +1,15 @@
 title: Yaml-entity
+
+navigation:
+  auto: true
+  items:
+    - { path: /hello-world, text: Hello world }
+    -
+        route: test
+        text: Test
+        parameter:
+          slug: coucou
+          two: hello-world
+
+    - { route: admin, text: Administration }
+#    - { route: test, text: Test }
